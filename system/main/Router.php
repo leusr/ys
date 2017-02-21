@@ -196,7 +196,8 @@ class Router {
 
     /**
      * Parse request
-     * @return array  The action splitted into class and method names.
+     * @return array  The action splitted into class and method names,
+     *                and the parameters on third index.
      */
     public function parseRequest() {
         if (empty($this->segments)) {
@@ -207,7 +208,8 @@ class Router {
         foreach ($this->routes as $route => $action) {
             if ($this->matchRoute($route)) {
                 // Found the right route.
-                return array_merge($this->parseAction($action), $this->getVars($route));
+                list($controller, $method) = $this->parseAction($action);
+                return [$controller, $method, $this->getVars($route)];
             }
         }
 

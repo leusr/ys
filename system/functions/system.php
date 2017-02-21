@@ -8,10 +8,24 @@ use ys\main\View;
  * This function calls the controller actually.
  */
 function run() {
-    list($controller, $method) = parsereq();
-    with(new $controller)->$method();
+    $Router = Router::getInstance();
 
-    flushsettings();
+    list($controller, $method, $params) = $Router->parseRequest();
+
+    $controller = controllerNS($controller);
+    $controller = new $controller;
+    call_user_func_array([$controller, $method], $params);
+
+    stop();
+}
+
+/**
+ * Store changes in files, or jut quick return if nothing changed.
+ */
+function stop() {
+    $Config = Config::getInstance();
+
+    $Config->flushSettings();
 }
 
 /**
@@ -22,13 +36,10 @@ function run() {
  */
 function parsereq() {
     $Router = Router::getInstance();
-    $request = $Router->parseRequest();
 
-    pr($request);
+    list($controller, $method, $params) = $Router->parseRequest();
 
-    list($controller, $method) = $request;
-
-    return [controllerNS($controller), $method];
+    return [controllerNS($controller), $method, $params];
 }
 
 /**
@@ -68,15 +79,6 @@ function setting($key, $data = null) {
     $Config = Config::getInstance();
 
     return $Config->setting($key, $data);
-}
-
-/**
- * Store changes in files, or jut quick return if nothing changed.
- */
-function flushsettings() {
-    $Config = Config::getInstance();
-
-    $Config->flushSettings();
 }
 
 /**
