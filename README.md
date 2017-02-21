@@ -48,8 +48,7 @@ in __json__ files. At saveing data it is allowed to have only a dotless single k
 ```php
 setting('comments.global.enabled');  // Get value from comments.json
 setting('comments.global.enabled', true);  // Set value
-setting('comments', ['global' => ['enabled' => true]]);  // Same as above with another syntax. 
-                                                         // Make sense whit more values.
+setting('comments', ['global' => ['enabled' => true, 'disabled' => 'no']]);  // Two values at once.
 ```
 
 ####getcache(string: $name, int: $expire = 0)
