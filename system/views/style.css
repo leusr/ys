@@ -1,0 +1,26 @@
+body {
+  font: 1em/1.35 'Arsenal', sans-serif;
+  color: #ddd;
+  background-color: #444;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.5);
+  margin: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 700px;
+  margin: 0 auto 40px;
+}
+
+footer {
+  line-height: 40px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 40px;
+  padding: 0 20px;
+  text-align: right;
+  color: #999;
+  background-color: #333;
+}

@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @var string $document_title
+ * @var string $body_class
+ */
+
+?><!DOCTYPE html>
+  <html lang="<?= config('general.lang_code') ?>">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><?= e($document_title) ?></title>
+    <base href="<?= config('general.base_href') ?>">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arsenal:400,400i,700&amp;subset=latin-ext">
+    <style><?= include __DIR__ . '/../style.css' ?></style>
+  </head>
+  <body class="<?= e($body_class) ?>">
+  <div class="page">
