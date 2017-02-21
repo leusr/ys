@@ -183,6 +183,7 @@ Insert svg use xlink:href tag.
 
 - `shash(string: $data, string: $encdata = null)` - Secure hash.
 
+- `qhash(string: $data)` - Quick one-way hash.
 
 
 ### `debug.php`
