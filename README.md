@@ -13,7 +13,7 @@ With some facades, that's all.
 
 ## Install
 
-1. Upload codes to an Apache webserver, where `public` directory must be your document root. Done.
+1. Upload codes to an Apache webserver, where `public` directory must be your document root.
 
 
 
@@ -75,33 +75,36 @@ All routes can contains the following wildcards:
 - __:num__        - 0-9
 - __()__          - Optional segment. e.g.: `pages(/:num)`
 
-If a route with wildcards match, the values will be available in the controller as method arguments.
+If a route with wildcards match, the values will be available in the controller as method parameters.
 
 ```php
 route('home', 'Index@main');   // Override home route.
 route('404', 'Notfound');   // Override 404 route.
-route('category/:word', 'Category@list');
+route('category/:word(/page-:num)', 'Category@list');  // function list($category_slug, $pagenum = 1) {}
 route('user/:num(/edit)', 'User');
-route(':segments', 'BigBossController');
 ```
 
 
-- `baseurl()` - Get baseurl
-- `subdir()` - Get subdirectory relative to `$_SERVER['DOCUMENT_ROOT']`.
-- `segment(int: $index)` - Get an url segment by its index (starting with zero).
+####baseurl()
 
-In yocto System automatic passing the parameters to controllers isn't implemented, 
-but with this function it's easy to access all segments of the requested url.
+Get baseurl
 
-- `view()` - Create new view instance __with given arguments__.
+####subdir()
 
-- __1st param__ - The view's path relative to `VIEWSPATH`. `VIEWSPATH` can be set 
-manually to anything, if it not set, yocto will search for  
-`SYSPATH/templates` or `SYSPATH/views` (in this exact order), if not found `SYSPATH`
-is the fallback default.
-- (...)
+Get subdirectory relative to `$_SERVER['DOCUMENT_ROOT']`.
 
-- `incview()`
+####segment(int: $index)
+
+Get an url segment by its index (starting with zero).
+
+####view(string: $view, $data = null)
+
+Create new view instance with given arguments.
+
+- `$view`: The view's path relative to `VIEWSPATH`.
+- `$data`: array or string, variables to the view to display them.
+
+####incview()
 
 Include view in another view.
 
@@ -109,39 +112,54 @@ Include view in another view.
 
 ### `template.php`
 
-- `e($value)` - Escape HTML special chars.
+####e($value)
 
-- `ent($value)` - Escape all weird characters to HTML entities.
+Escape HTML special chars.
 
-- `img(string: $path)` - Resize image and/or get resized image url.
+####ent($value)
 
-- __$path__ - (string) The path of the original image.
+Escape all weird characters to HTML entities.
+
+####img(string: $path)
+
+Resize image and/or get resized image url.
+
+__$path__ - (string) The path of the original image.
           Relative from base path defined in Image class,
           or may set by constructor or setBasePath setter.
 
-- __Additional params__
+__Additional params__
 
-- 1: (string|int|null) A predefined named size, or the (max) width value.
-- 2: (int|null) The (max) height value.
-- 3: (bool) The crop flag.
+1. (string|int|null) A predefined named size, or the (max) width value.
+2. (int|null) The (max) height value.
+3. (bool) The crop flag.
 
-- __Some examples__
+__Some examples__
 
-- `img('some.jpg', 'thumb');` - Resize to predefined `thumb` size.
-- `img('some.jpg', 400, 300);` - Original ratio within max-width=400 and max-height=300.
-- `img('some.jpg', 400, 300, true);` - Exact 400x300.
-- `img('some.jpg', null, 400);` - Orginal ratio, width no matter, height=400.
+```php
+img('some.jpg', 'thumb');  // Resize to predefined 'thumb' size.
+img('some.jpg', 400, 300);  // Original ratio within max-width=400 and max-height=300.
+img('some.jpg', 400, 300, true);  // Exact 400x300.
+img('some.jpg', null, 400);  // Orginal ratio, width no matter, height=400.
+```
 
-- __return__ (string) The url of resized or original image
+__return__ (string) The url of resized or original image.
 
-- `show(string: $path)` - The same as above, but instead of saving image send it to http output.
+####show(string: $path)
 
-- `svg($name)` - Include an svg icon from configured path
-         or fallback default to `ROOTPATH/assets/icons`
+The same as above, but instead of saving image send it to http output.
+
+####svg(string: $name)
+
+Include an svg icon from configured path or fallback default to `ROOTPATH/assets/icons`.
          
-- `svguse(string: $id, string: $url = "")` - Insert svg use xlink:href tag
+####svguse(string: $id, string: $url = "")
 
-- `blank()` - 1x1 blank.gif base64
+Insert svg use xlink:href tag.
+
+####blank()
+
+1x1 blank.gif base64.
 
 
 
